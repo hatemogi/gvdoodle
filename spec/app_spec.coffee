@@ -8,9 +8,9 @@ describe "express 앱", ->
       .expect(200)
       .expect(/editor/)
       .end done
-  it 'POST /dot', (done) ->
+  it 'POST /preview.svg', (done) ->
     body = "digraph G {\n d1 -> d2 -> d3; d1 -> d4; }"
-    request(app).post("/dot").send({text: body})
+    request(app).post("/preview.svg").send({text: body})
       .expect(200)
       .end done
   it "GET /TEST1 - 소스 읽기", (done) ->

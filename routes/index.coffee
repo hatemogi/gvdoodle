@@ -9,14 +9,17 @@ router = express.Router()
 router.get "/", (req, res) ->
   res.render "editor"
 
-router.get /\/[0-9A-Z]{5,6}/, (req, res) ->
+router.get /^\/[0-9A-Z]{5,6}$/, (req, res) ->
   console.log "request for #{req.path}"
   id = req.path.replace(/^\//, '')
   return res.send(404) unless gvid.valid(id)
   store.load_source id, (err, m, d) ->
     res.render "editor", {meta: m, dot: d}
 
-router.post "/dot", (req, res) ->
+router.get /^\/[0-9A-Z]{5,6}\.svg$/, (req, res) ->
+  res.end "request.svg for #{req.path}"
+
+router.post "/preview.svg", (req, res) ->
   engine = req.body.engine || 'dot'
   console.log "engine: #{engine}"
   dot_runner.run engine, req.body.text, (err, svg) ->
