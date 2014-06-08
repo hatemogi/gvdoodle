@@ -1,0 +1,40 @@
+{
+    "additions": [
+        {
+            "kind": "dns#resourceRecordSet",
+            "name": "store.gvdoodle.com.",
+            "rrdatas": [
+                "c.storage.googleapis.com."
+            ],
+            "ttl": 3600,
+            "type": "CNAME"
+        },
+        {
+            "kind": "dns#resourceRecordSet",
+            "name": "gvdoodle.com.",
+            "rrdatas": [
+                "162.222.183.179"
+            ],
+            "ttl": 600,
+            "type": "A"
+        },
+        {
+            "kind": "dns#resourceRecordSet",
+            "name": "gvdoodle.com.",
+            "rrdatas": [
+                "google-site-verification=GP2GHGXBEwCD_ooENhsrMsOZ7dJHhHs_FzP3QHc25Bw"
+            ],
+            "ttl": 21600,
+            "type": "TXT"
+        },
+        {
+            "kind": "dns#resourceRecordSet",
+            "name": "preview.gvdoodle.com.",
+            "rrdatas": [
+                "162.222.183.179"
+            ],
+            "ttl": 600,
+            "type": "A"
+        }
+    ]
+}
