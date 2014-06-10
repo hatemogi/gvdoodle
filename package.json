@@ -27,7 +27,8 @@
     "morgan": "~1.0.0",
     "sqlite3": "^2.2.3",
     "static-favicon": "~1.0.0",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "unirest": "^0.2.7"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
