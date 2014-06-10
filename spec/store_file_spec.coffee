@@ -8,11 +8,11 @@ describe 'Store (File)', ->
     dot = "digraph { A-> B#{Math.floor(Math.random() * 100)} }"
     async.waterfall [
       (cb) ->
-        store.save_source meta, dot, cb
+        store.saveSource meta, dot, cb
       (id, cb) ->
         expect(gvid.valid(id)).toBeTruthy()
-        expect(store.exists_source(id)).toBeTruthy()
-        store.load_source(id, cb)
+        expect(store.existsSource(id)).toBeTruthy()
+        store.loadSource(id, cb)
       (m, d, cb) ->
         expect(d).toEqual dot
         expect(m).toEqual meta
