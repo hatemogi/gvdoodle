@@ -1,7 +1,12 @@
 express = require "express"
 dot_runner = require "../lib/dot_runner"
 gvid = require "../lib/gvid"
-store = require "../lib/store_file"
+StoreFile = require("../lib/store_file")
+
+store = if process.env.NODE_ENV == 'test'
+          new StoreFile("store.test")
+        else
+          new StoreFile("store")
 
 router = express.Router()
 

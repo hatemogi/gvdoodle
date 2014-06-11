@@ -1,31 +1,38 @@
 gvid = require("./gvid")
 async = require("async")
 
-Store = (handler) ->
-  this.saveSource = (meta, dot, callback, id_gen) ->
-    for _ in [0..10]
-      id = (id_gen || gvid)()
-      continue if handler.existsSource(id)
+Store = -> this
+
+Store.prototype.saveSource = (meta, dot, callback, id_gen) ->
+  self = this
+  async.retry 10, (cb) ->
+    id = (id_gen || gvid)()
+    self.existsSource id, (exists) ->
+      unless exists
+        cb(null, id)
+      else
+        cb("not exists")
+  , (err, id) ->
+    if id
       metaJSON = JSON.stringify(meta)
       async.parallel [
-        (cb) -> handler.writeFile("#{id}.gv", dot, cb)
-        (cb) -> handler.writeFile("#{id}.meta", metaJSON, cb)
+        (cb) -> self.writeFile("#{id}.gv", dot, cb)
+        (cb) -> self.writeFile("#{id}.meta", metaJSON, cb)
       ], (err) ->
         callback(err, id)
-      return id
-    callback("could not generate proper gvid")
+    else
+      callback("could not generate proper gvid")
 
-  this.existsSource = handler.existsSource
-
-  this.loadSource = (id, callback) ->
-    return callback("not exists") unless handler.existsSource(id)
-    async.parallel [
-      (cb) -> handler.readFile("#{id}.meta", cb)
-      (cb) -> handler.readFile("#{id}.gv", cb)
-    ], (err, res) ->
-      callback(err, JSON.parse(res[0].toString()), res[1].toString())
-
-  this.saveFile = handler.writeFile
-  this
+Store.prototype.loadSource = (id, callback) ->
+  self = this
+  this.existsSource id, (exists) ->
+    unless exists
+      callback("source not found")
+    else
+      async.parallel [
+        (cb) -> self.readFile("#{id}.meta", cb)
+        (cb) -> self.readFile("#{id}.gv", cb)
+      ], (err, res) ->
+        callback(err, JSON.parse(res[0].toString()), res[1].toString())
 
 module.exports = Store

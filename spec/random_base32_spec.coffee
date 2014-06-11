@@ -1,3 +1,4 @@
+require("./helper")
 bases = require('bases')
 
 # An example of a simple pseudo-random number generator is the multiply-with-carry method invented by George Marsaglia. It is computationally fast and has good (albeit not cryptographically strong) randomness properties:[7]

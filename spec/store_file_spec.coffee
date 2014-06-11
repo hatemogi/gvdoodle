@@ -1,5 +1,6 @@
 describe 'Store (File)', ->
-  store = require("../lib/store_file")
+  StoreFile = require("../lib/store_file")
+  store = new StoreFile("store.test")
   gvid = require("../lib/gvid")
   async = require("async")
 
@@ -11,7 +12,9 @@ describe 'Store (File)', ->
         store.saveSource meta, dot, cb
       (id, cb) ->
         expect(gvid.valid(id)).toBeTruthy()
-        expect(store.existsSource(id)).toBeTruthy()
+        store.existsSource(id, (exists) ->
+          expect(exists).toBeTruthy()
+        )
         store.loadSource(id, cb)
       (m, d, cb) ->
         expect(d).toEqual dot

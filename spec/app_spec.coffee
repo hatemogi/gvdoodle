@@ -1,3 +1,4 @@
+require("./helper")
 app = require("../app")
 request = require("supertest")
 

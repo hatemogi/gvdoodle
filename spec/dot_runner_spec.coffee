@@ -1,3 +1,4 @@
+require("./helper")
 dotRunner = new require("../lib/dot_runner")
 
 describe 'dotRunner', ->

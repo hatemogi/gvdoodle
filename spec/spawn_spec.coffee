@@ -1,3 +1,4 @@
+require("./helper")
 spawn = require("child_process").spawn
 fs = require("fs")
 

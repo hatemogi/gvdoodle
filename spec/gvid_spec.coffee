@@ -1,3 +1,5 @@
+require("./helper")
+
 describe 'gvID', ->
   gvid = require("../lib/gvid")
 

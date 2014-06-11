@@ -1,3 +1,4 @@
+require("./helper")
 describe 'Unirest for GoogleStorage insert', ->
   unirest = require("unirest")
   apikey = require("../lib/google_api_key")
