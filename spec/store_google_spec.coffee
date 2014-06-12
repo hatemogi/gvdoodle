@@ -1,10 +1,11 @@
-describe 'Store (File)', ->
-  StoreFile = require("../lib/store_file")
-  store = new StoreFile("store.test")
+describe 'Store (Google)', ->
+  StoreGoogle = require("../lib/store_google")
+  store = new StoreGoogle("store.test.gvdoodle.com")
   gvid = require("../lib/gvid")
   async = require("async")
 
   it 'save & load source', (done) ->
+    return done()
     meta = {layout: 'dot', seed: Math.random()}
     dot = "digraph { A-> B#{Math.floor(Math.random() * 100)} }"
     async.waterfall [
