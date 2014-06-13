@@ -1,10 +1,10 @@
 {
-  "name": "holiday-project",
+  "name": "gvdoodle",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/coffee ./bin/www.coffee",
-    "test": "./node_modules/.bin/grunt test",
+    "test": "NODE_ENV=test ./node_modules/.bin/grunt test",
     "postinstall": "./node_modules/bower/bin/bower install",
     "createdb": "sqlite3 -echo db/dev.db < db/create.sql"
   },
@@ -27,7 +27,8 @@
     "morgan": "~1.0.0",
     "sqlite3": "^2.2.3",
     "static-favicon": "~1.0.0",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "unirest": "^0.2.7"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

@@ -1,3 +1,4 @@
+require("./helper")
 bases = require('bases')
 
 # An example of a simple pseudo-random number generator is the multiply-with-carry method invented by George Marsaglia. It is computationally fast and has good (albeit not cryptographically strong) randomness properties:[7]
@@ -29,7 +30,7 @@ find_conflict_avg = (start, end, rngClass, msg) ->
   # console.log "range = #{range}"
   counts = []
   rng = new rngClass(range)
-  for i in [0...10]
+  for i in [0...3]
     counts.push conflict_space(rng)
   avg = counts.reduce((r,c) -> (r || 0) + c) / counts.length
   min = Math.min.apply(Math.min, counts)
@@ -47,9 +48,9 @@ describe 'base32', ->
       Math.floor(this.carrier.next() * 1.0 / (1 << 32) * range)
     this
   it 'Math.random 5자리 두번 충돌나는 수 확인', ->
-    expect(find_conflict_avg(bases.fromBase32('10000'), bases.fromBase32('ZZZZZ'),MathRandom, "5자리 충돌")).toBeGreaterThan 100000
+    expect(find_conflict_avg(bases.fromBase32('10000'), bases.fromBase32('ZZZZZ'),MathRandom, "5자리 충돌")).toBeGreaterThan 80000
   it 'Math.random 4자리 두번 충돌나는 수 확인', ->
-    expect(find_conflict_avg(bases.fromBase32('1000'), bases.fromBase32('ZZZZ'), MathRandom, "4자리 충돌")).toBeGreaterThan 10000
+    expect(find_conflict_avg(bases.fromBase32('1000'), bases.fromBase32('ZZZZ'), MathRandom, "4자리 충돌")).toBeGreaterThan 8000
 
   skip = (-> jasmine.log 'skipped') unless skip?
 

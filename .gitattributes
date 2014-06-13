@@ -1,0 +1,2 @@
+lib/google_api_key.coffee filter=crypt
+conf/gapi_key.pem filter=crypt

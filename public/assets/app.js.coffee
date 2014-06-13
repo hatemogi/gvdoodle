@@ -15,7 +15,7 @@
         this.tab == t
       this
     ]
-    .controller "EditorCtrl", ['$scope', '$http', ($scope, $http) ->
+    .controller "EditorCtrl", ['$scope', '$http', '$sce', ($scope, $http, $sce) ->
       window.editor = editor = ace.edit("editor")
       # editor.setTheme("ace/theme/clouds")
       editor.setTheme("ace/theme/tomorrow")
@@ -24,18 +24,21 @@
       # editor.getSession().setUseWrapMode true
       editor.focus()
 
+      loadSVG = (data, status) ->
+        $scope.svg = $sce.trustAsHtml(data)
+        console.log ['success', data]
+        # $('#output svg').attr("width", "100%").attr("height", "100%")
+
+      this.loadSaved = (gvid) ->
+        $http.get("/#{gvid}.svg").success(loadSVG)
+
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
       this.run = (e) ->
         # $http.defaults.headers.post["Content-Type"] = "text/plain"
-        $http.post("/dot", {
+        $http.post("/preview.svg", {
           text: editor.getValue()
           engine: $('#engine-select').val()
-        }).success(
-          (data, status) ->
-            $('#output').html data
-            console.log ['success', data]
-            # $('#output svg').attr("width", "100%").attr("height", "100%")
-        ).error (res) ->
+        }).success(loadSVG).error (res) ->
           console.log ['error', res]
       this
     ]

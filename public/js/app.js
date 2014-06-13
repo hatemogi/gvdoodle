@@ -21,21 +21,25 @@
       return this;
     }
   ]).controller("EditorCtrl", [
-    '$scope', '$http', function($scope, $http) {
-      var editor;
+    '$scope', '$http', '$sce', function($scope, $http, $sce) {
+      var editor, loadSVG;
       window.editor = editor = ace.edit("editor");
       editor.setTheme("ace/theme/tomorrow");
       editor.getSession().setMode("ace/mode/dot");
       editor.focus();
+      loadSVG = function(data, status) {
+        $scope.svg = $sce.trustAsHtml(data);
+        return console.log(['success', data]);
+      };
+      this.loadSaved = function(gvid) {
+        return $http.get("/" + gvid + ".svg").success(loadSVG);
+      };
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo'];
       this.run = function(e) {
-        return $http.post("/dot", {
+        return $http.post("/preview.svg", {
           text: editor.getValue(),
           engine: $('#engine-select').val()
-        }).success(function(data, status) {
-          $('#output').html(data);
-          return console.log(['success', data]);
-        }).error(function(res) {
+        }).success(loadSVG).error(function(res) {
           return console.log(['error', res]);
         });
       };

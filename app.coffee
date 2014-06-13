@@ -13,6 +13,10 @@ app.set "views", path.join(__dirname, "views")
 app.set "view engine", "jade"
 app.use favicon()
 app.use logger("dev")
+app.use (req, res, next) ->
+  if req.url.lastIndexOf(".svgz") == req.url.length - 5
+    res.set 'Content-Encoding', 'gzip'
+  next()
 app.use bodyParser.json({limit: '1mb'})
 app.use bodyParser.urlencoded()
 app.use cookieParser()
@@ -25,8 +29,6 @@ app.use (req, res, next) ->
   err = new Error("Not Found")
   err.status = 404
   next err
-  return
-
 
 #/ error handlers
 
@@ -39,9 +41,6 @@ if app.get("env") is "development"
       message: err.message
       error: err
 
-    return
-
-
 # production error handler
 # no stacktraces leaked to user
 app.use (err, req, res, next) ->
@@ -50,6 +49,5 @@ app.use (err, req, res, next) ->
     message: err.message
     error: {}
 
-  return
 
 module.exports = app

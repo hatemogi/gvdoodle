@@ -1,6 +1,6 @@
-describe 'Store (File)', ->
-  StoreFile = require("../lib/store_file")
-  store = new StoreFile("store.test")
+describe 'Store (Google)', ->
+  StoreGoogle = require("../lib/store_google")
+  store = new StoreGoogle("store.test.gvdoodle.com")
   gvid = require("../lib/gvid")
   async = require("async")
 
@@ -21,4 +21,3 @@ describe 'Store (File)', ->
         expect(m).toEqual meta
         cb()
     ], done
-

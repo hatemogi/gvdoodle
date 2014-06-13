@@ -1,6 +1,8 @@
 TODO
 ==========
-* 테스팅 단계임을 공지 (특정시점에 데이터 삭제예정)
+* svg 프리뷰에 xml 그대로 넣던 것을 img 태그에 src로 바꾸자. (img태그로도 링크 잘 걸린다)
+* 프리뷰에 img태그로 넣을 경우, 파일을 꼭 생성해야하는 문제. POST  /preview 방식이 안된다. (세션을 써야하나?)
+* 스토리지 API를 그대로 쓰자. https://developers.google.com/storage/docs/json_api/v1/objects/insert
 * ACE 에디터 본문 부분이 깜빡이는 것이 거슬림
 * 똑같은 소스라면 같은 gvID를 발급할까? 아니면 최소한 공간 절약이라도?
 * window.localStorage 이용해서 히스토리 제공
@@ -29,6 +31,7 @@ FIX
 
 DONE
 ===========
+* 테스팅 단계임을 공지 (특정시점에 데이터 삭제예정)
 * 불필요 모듈 및 소스/스펙 제거 (eg. nodegit)
 * gvID 판별 RE작성
 * img태그에서 svg사용 가능한 브라우저: http://caniuse.com/svg-img (현재 전부)
