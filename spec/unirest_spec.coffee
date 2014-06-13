@@ -4,9 +4,10 @@ describe 'Unirest for GoogleStorage insert', ->
   apikey = require("../lib/google_api_key")
 
   it 'post a file with API key', (done) ->
+    return done()
     unirest.post("https://www.googleapis.com/upload/storage/v1/b/store.test.gvdoodle.com/o")
       # For OAuth2 request use the header below
-      # .headers({'Authorization': "Bearer ya29.LgC-t4sIrJRAORsAAAAkIVDJRYWK32hljUhvAKDLmsd09tOcM1VgKNsTpe56UA"})
+      .headers({'Authorization': "Bearer ya29.LgBbqHgRM363mRsAAACwwszDoquhlaT9zC5EJ_fMRH1SIOMnGTch3CDZFrtsOQ"})
       .type("text/vnd.graphviz")
       .query({
         uploadType: 'media'

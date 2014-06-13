@@ -30,7 +30,7 @@ find_conflict_avg = (start, end, rngClass, msg) ->
   # console.log "range = #{range}"
   counts = []
   rng = new rngClass(range)
-  for i in [0...10]
+  for i in [0...3]
     counts.push conflict_space(rng)
   avg = counts.reduce((r,c) -> (r || 0) + c) / counts.length
   min = Math.min.apply(Math.min, counts)
