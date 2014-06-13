@@ -5,7 +5,6 @@ describe 'Store (Google)', ->
   async = require("async")
 
   it 'save & load source', (done) ->
-    return done()
     meta = {layout: 'dot', seed: Math.random()}
     dot = "digraph { A-> B#{Math.floor(Math.random() * 100)} }"
     async.waterfall [
@@ -22,4 +21,3 @@ describe 'Store (Google)', ->
         expect(m).toEqual meta
         cb()
     ], done
-

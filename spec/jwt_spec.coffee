@@ -21,7 +21,7 @@ describe 'Google JWS', ->
       iss: "471223684581-3ce8qn4op5cb9qh3dpmtfj84qsk1urmb@developer.gserviceaccount.com"
       scope: "https://www.googleapis.com/auth/devstorage.read_write"
       aud: "https://accounts.google.com/o/oauth2/token"
-      exp: Math.floor((Date.now() + 3000) / 1000)
+      exp: Math.floor(Date.now() / 1000 + 300)
       iat: Math.floor(Date.now() / 1000)
     }
     m = "#{base64url header}.#{base64url JSON.stringify claim}"
@@ -33,7 +33,5 @@ describe 'Google JWS', ->
         'grant_type': "urn:ietf:params:oauth:grant-type:jwt-bearer"
         'assertion': jwt
       }).end (res) ->
-        console.log(res.body)
-        if (res.code == 200)
-          console.log res.body.access_token
+        expect(res.code).toBe 200
         done()
