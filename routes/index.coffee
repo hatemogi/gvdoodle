@@ -2,11 +2,25 @@ express = require "express"
 dot_runner = require "../lib/dot_runner"
 gvid = require "../lib/gvid"
 StoreFile = require("../lib/store_file")
+StoreGoogle = require("../lib/store_google")
+logger = require("../lib/logger")
 
-store = if process.env.NODE_ENV == 'test'
-          new StoreFile("store.test")
-        else
-          new StoreFile("store")
+storeFileFactory = ->
+  if process.env.NODE_ENV == 'test'
+    new StoreFile("store.test")
+  else
+    new StoreFile("store")
+
+storeGoogleFactory = ->
+  google = (host) ->
+    logger.info("storeGoogle is ready for #{host}")
+    new StoreGoogle(host)
+  if process.env.NODE_ENV == 'test'
+    google "store.test.gvdoodle.com"
+  else
+    google "store.gvdoodle.com"
+
+store = storeGoogleFactory()
 
 router = express.Router()
 
@@ -19,6 +33,8 @@ router.get /^\/[0-9A-Z]{5,6}$/, (req, res) ->
   id = req.path.replace(/^\//, '')
   return res.send(404) unless gvid.valid(id)
   store.loadSource id, (err, m, d) ->
+    if err
+      logger.error "loadSource: #{err}"
     res.render "editor", {meta: m, dot: d}
 
 router.get /^\/[0-9A-Z]{5,6}\.svg$/, (req, res) ->
@@ -30,5 +46,9 @@ router.post "/preview.svg", (req, res) ->
   dot_runner.run engine, req.body.text, (err, svg) ->
     # console.log ["result", svg]
     res.end svg
+
+router.post "/publish", (req, res) ->
+  id = gvid()
+  res.redirect("/#{id}")
 
 module.exports = router

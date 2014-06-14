@@ -33,6 +33,7 @@ Store.prototype.loadSource = (id, callback) ->
         (cb) -> self.readFile("#{id}.meta", cb)
         (cb) -> self.readFile("#{id}.gv", cb)
       ], (err, res) ->
-        callback(err, JSON.parse(res[0].toString()), res[1].toString())
+        return callback(err) if err
+        callback(null, JSON.parse(res[0].toString()), res[1].toString())
 
 module.exports = Store

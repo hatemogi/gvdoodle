@@ -28,7 +28,8 @@
     "sqlite3": "^2.2.3",
     "static-favicon": "~1.0.0",
     "underscore": "^1.6.0",
-    "unirest": "^0.2.7"
+    "unirest": "^0.2.7",
+    "winston": "^0.7.3"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
