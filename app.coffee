@@ -13,10 +13,13 @@ app.set "views", path.join(__dirname, "views")
 app.set "view engine", "jade"
 app.use favicon()
 app.use logger("dev")
+
+# nginx is handle this feature
 app.use (req, res, next) ->
   if req.url.lastIndexOf(".svgz") == req.url.length - 5
     res.set 'Content-Encoding', 'gzip'
   next()
+
 app.use bodyParser.json({limit: '1mb'})
 app.use bodyParser.urlencoded()
 app.use cookieParser()
