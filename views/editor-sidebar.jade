@@ -13,8 +13,7 @@
         | Layout Engine
     .panel-collapse
       .panel-body
-        select.form-control(id="engine-select")
-          option(ng-repeat="e in editor.engines" value="{{e}}") {{e}}
+        select.form-control(ng-model="editor.engine" ng-options="e for e in editor.engines")
 
   .panel-group#collapse-panel
     .panel.panel-default

@@ -22,7 +22,7 @@
     }
   ]).controller("EditorCtrl", [
     '$scope', '$http', '$sce', function($scope, $http, $sce) {
-      var editor, loadSVG;
+      var editor, loadSVG, self;
       window.editor = editor = ace.edit("editor");
       editor.setTheme("ace/theme/tomorrow");
       editor.getSession().setMode("ace/mode/dot");
@@ -34,11 +34,13 @@
       this.loadSaved = function(gvid) {
         return $http.get("/" + gvid + ".svg").success(loadSVG);
       };
+      this.engine = 'neato';
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo'];
+      self = this;
       this.run = function(e) {
         return $http.post("/preview.svg", {
           text: editor.getValue(),
-          engine: $('#engine-select').val()
+          engine: self.engine
         }).success(loadSVG).error(function(res) {
           return console.log(['error', res]);
         });

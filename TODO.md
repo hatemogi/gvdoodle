@@ -1,5 +1,6 @@
 TODO
 ==========
+* 500.html 작성
 * svg 프리뷰에 xml 그대로 넣던 것을 img 태그에 src로 바꾸자. (img태그로도 링크 잘 걸린다)
 * 프리뷰에 img태그로 넣을 경우, 파일을 꼭 생성해야하는 문제. POST  /preview 방식이 안된다. (세션을 써야하나?)
 * 스토리지 API를 그대로 쓰자. https://developers.google.com/storage/docs/json_api/v1/objects/insert

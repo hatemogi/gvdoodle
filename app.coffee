@@ -1,7 +1,7 @@
 express = require("express")
 path = require("path")
 favicon = require("static-favicon")
-logger = require("morgan")
+appLogger = require("morgan")
 cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
 routes = require("./routes/index")
@@ -12,7 +12,7 @@ app = express()
 app.set "views", path.join(__dirname, "views")
 app.set "view engine", "jade"
 app.use favicon()
-app.use logger("dev")
+app.use appLogger("dev")
 
 # nginx is handle this feature
 app.use (req, res, next) ->

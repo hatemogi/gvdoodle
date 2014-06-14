@@ -4,7 +4,6 @@ authToken = require("./gapi_auth")
 
 StoreGoogle = (host) ->
   this.root = root = host
-  console.log("host: #{root}")
   this.url = (name) -> "#{root}/#{name}"
   this
 

@@ -31,13 +31,14 @@
 
       this.loadSaved = (gvid) ->
         $http.get("/#{gvid}.svg").success(loadSVG)
-
+      this.engine = 'neato'
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
+      self = this
       this.run = (e) ->
         # $http.defaults.headers.post["Content-Type"] = "text/plain"
         $http.post("/preview.svg", {
           text: editor.getValue()
-          engine: $('#engine-select').val()
+          engine: self.engine
         }).success(loadSVG).error (res) ->
           console.log ['error', res]
       this
