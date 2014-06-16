@@ -15,11 +15,17 @@ StoreGoogle.prototype.existsSource = (id, cb) ->
 
 StoreGoogle.prototype.writeFile = (name, content, cb) ->
   root = this.root
+  type = switch
+    when /\.gv$/.test name then "text/vnd.graphviz"
+    when /\.meta$/.test name then "application/json"
+    when /\.svgz?$/.test name then "image/svg+xml"
+    else "application/octet-stream"
+
   authToken((err, token) ->
     return cb(err) if err
     unirest.post("https://www.googleapis.com/upload/storage/v1/b/#{root}/o")
       .headers({"Authorization": "Bearer #{token}"})
-      .type("text/vnd.graphviz")
+      .type(type)
       .query({
         uploadType: 'media'
         name: name
@@ -31,6 +37,6 @@ StoreGoogle.prototype.writeFile = (name, content, cb) ->
 StoreGoogle.prototype.readFile = (name, cb) ->
   unirest.get("http://#{this.url(name)}").end (res) ->
     return cb("StoreGoogle.readFile: #{res.code}") unless res.code == 200
-    cb(null, res.body)
+    cb(null, res.raw_body)
 
 module.exports = StoreGoogle

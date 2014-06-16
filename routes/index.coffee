@@ -33,10 +33,7 @@ router.get /^\/[0-9A-Z]{5,6}$/, (req, res) ->
   logger.debug "request for #{req.path}"
   id = req.path.replace(/^\//, '')
   return res.send(404) unless gvid.valid(id)
-  store.loadSource id, (err, m, d) ->
-    if err
-      logger.error "loadSource: #{err}"
-    res.render "editor", {meta: m, dot: d}
+  res.render "editor", {gvid: id}
 
 router.get /^\/[0-9A-Z]{5,6}\.svg$/, (req, res) ->
   res.end "request.svg for #{req.path}"

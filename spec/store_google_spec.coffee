@@ -5,7 +5,7 @@ describe 'Store (Google)', ->
   async = require("async")
 
   it 'save & load source', (done) ->
-    meta = {layout: 'dot', seed: Math.random()}
+    meta = {engine: 'dot', seed: Math.random()}
     dot = "digraph { A-> B#{Math.floor(Math.random() * 100)} }"
     async.waterfall [
       (cb) ->

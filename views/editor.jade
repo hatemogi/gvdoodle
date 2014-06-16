@@ -1,22 +1,8 @@
 extends editor-layout
 block content
-  #editor-container
+  #editor-container(ng-init="editor.load('#{gvid}')")
     include editor-sidebar
     #editor
-      if dot
-        = dot
-      else
-        | /*
-        |   Edit your "dot" language and click "Run" button.
-        |   Then the result will appear on preview area.
-        |   http://www.graphviz.org/content/dot-language
-        |  */
-        | 
-        | digraph G {
-        |   Hello -> World;
-        |   World -> Beautiful;
-        |   Life -> Beautiful;
-        | }
     #preview
-      #output(ng-bind-html="svg")
-      img(src="/preview.svgz")
+      #output.animate-if(ng-bind-html="svg" ng-show="editor.show_preview")
+      img.animate-if(ng-src="{{editor.svg_url}}" ng-hide="editor.show_preview")
