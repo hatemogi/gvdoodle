@@ -11,7 +11,6 @@ module.exports = (grunt) ->
         }
         files: {
           "public/js/app.js": ['public/assets/app.js.coffee']
-          "public/js/init.js": ['public/assets/init.js.coffee']
         }
       }
     }
@@ -25,14 +24,6 @@ module.exports = (grunt) ->
           "public/js/underscore.min.js": ["public/bower_components/underscore/underscore.js"]
         }
       }
-      requirejs: {
-        options: {
-          sourceMap: true
-        }
-        files: {
-          "public/js/require.min.js": ["public/bower_components/requirejs/require.js"]
-        }
-      }
       app: {
         options: {
           sourceMap: true
@@ -41,16 +32,6 @@ module.exports = (grunt) ->
         }
         files: {
           "public/js/app.min.js": ["public/js/app.js"]
-        }
-      }
-      init: {
-        options: {
-          sourceMap: true
-          sourceMapIn: 'public/js/init.js.map'
-          sourceMapName: 'public/js/init.min.js.map'
-        }
-        files: {
-          "public/js/init.min.js": ["public/js/init.js"]
         }
       }
     }
