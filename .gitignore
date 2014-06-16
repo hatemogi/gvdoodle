@@ -4,5 +4,6 @@ git
 db/*.db
 store/*
 store.test/*
+cache/*
 log/*
 password
