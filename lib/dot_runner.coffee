@@ -16,7 +16,7 @@ circo - circular layout, after Six and Tollis 99, Kauffman and Wiese 02. This is
 
 module.exports = {
   supported_engines: ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
-  run: (engine, dotString, callback) ->
+  preview: (engine, dotString, callback) ->
     assert(this.supported_engines.indexOf(engine) >= 0, "지원하지 않는 엔진: #{engine}")
     dot = spawn(engine, ['-Tsvg'], {stdio: 'pipe'})
     result = []

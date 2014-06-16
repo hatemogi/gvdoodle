@@ -40,7 +40,7 @@
       this.preview = 'preview.svgz';
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo'];
       this.run = function(e) {
-        return $http.post("/preview.svg", {
+        return $http.post("/preview", {
           text: editor.getValue(),
           engine: self.engine
         }).success(loadSVG).error(function(res) {

@@ -38,7 +38,7 @@
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
       this.run = (e) ->
         # $http.defaults.headers.post["Content-Type"] = "text/plain"
-        $http.post("/preview.svg", {
+        $http.post("/preview", {
           text: editor.getValue()
           engine: self.engine
         }).success(loadSVG).error (res) ->

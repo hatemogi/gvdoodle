@@ -38,10 +38,10 @@ router.get /^\/[0-9A-Z]{5,6}$/, (req, res) ->
 router.get /^\/[0-9A-Z]{5,6}\.svg$/, (req, res) ->
   res.end "request.svg for #{req.path}"
 
-router.post "/preview.svg", (req, res) ->
+router.post "/preview", (req, res) ->
   engine = req.body.engine || 'dot'
   logger.debug "engine: #{engine}"
-  dot_runner.run engine, req.body.text, (err, svg) ->
+  dot_runner.preview engine, req.body.text, (err, svg) ->
     # console.log ["result", svg]
     res.end svg
 
