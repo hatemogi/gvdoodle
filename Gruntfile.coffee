@@ -16,12 +16,20 @@ module.exports = (grunt) ->
     }
 
     uglify: {
-      underscore: {
+      vendor: {
         options: {
           sourceMap: true
         }
         files: {
-          "public/js/underscore.min.js": ["public/bower_components/underscore/underscore.js"]
+          "public/js/vendor.min.js": [
+            "public/bower_components/angular/angular.js"
+            "public/bower_components/ace-builds/src/ace.js"
+            "public/bower_components/ace-builds/src/mode-dot.js"
+            "public/bower_components/ace-builds/src/theme-tomorrow.js"
+            "public/bower_components/underscore/underscore.js"
+            "public/bower_components/jquery/dist/jquery.js"
+            "public/bower_components/bootstrap/dist/bootstrap.js"
+          ]
         }
       }
       app: {
@@ -39,7 +47,7 @@ module.exports = (grunt) ->
     watch:  {
       coffee: {
         files: ["public/assets/*.coffee"]
-        tasks: ["coffee", "uglify:app", "uglify:init"]
+        tasks: ["coffee", "uglify:app"]
       }
       jshint: {
         files: js_files
