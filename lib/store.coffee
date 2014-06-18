@@ -11,7 +11,7 @@ Store.prototype.saveSource = (meta, dot, callback, id_gen) ->
       unless exists
         cb(null, id)
       else
-        cb("not exists")
+        cb(new Error("couldn't generate an id"))
   , (err, id) ->
     if id
       metaJSON = JSON.stringify(meta)

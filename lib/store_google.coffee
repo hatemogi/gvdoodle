@@ -21,6 +21,7 @@ StoreGoogle.prototype.writeFile = (name, content, cb) ->
     when /\.svgz?$/.test name then "image/svg+xml"
     else "application/octet-stream"
 
+  # TODO: svgz의 경우 Content-Encoding: gzip 추가
   authToken((err, token) ->
     return cb(err) if err
     unirest.post("https://www.googleapis.com/upload/storage/v1/b/#{root}/o")

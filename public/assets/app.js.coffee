@@ -1,20 +1,4 @@
-  angular.module("holiday", [])
-    .controller "LoginCtrl", () ->
-      this.welcome = "환영합니다"
-      this
-    .controller "D3Ctrl", ['$scope', '$http', ($scope, $http) ->
-      this.tab = "sankey"
-      $scope.content = ''
-      this.selectTab = (t) ->
-        this.tab = t
-        console.log ["sankey 클릭됨", t]
-        if t == 'sankey'
-          $http.get('/d3/sankey').success (r) ->
-            $scope.content = r
-      this.isSelected = (t) ->
-        this.tab == t
-      this
-    ]
+  angular.module("gvdoodle", [])
     .controller "EditorCtrl", ['$scope', '$http', '$sce', ($scope, $http, $sce) ->
       window.editor = editor = ace.edit("editor")
       # editor.setTheme("ace/theme/clouds")
@@ -45,13 +29,11 @@
           console.log ['error', res]
       this.load = (id) ->
         $http.get("/#{id}.gv").success((data, status) ->
-          console.log data
           editor.setValue data
           editor.clearSelection()
         )
         $http.get("/#{id}.meta").success((data, status) ->
           if data && data.engine
-            console.log data.engine
             self.engine = data.engine
         )
         this.svg_url = "/#{id}.svgz"

@@ -1,6 +1,7 @@
 extends editor-layout
 block content
-  #editor-container(ng-init="editor.load('#{gvid}')")
+  - id = gvid || 'NEWT1'
+  #editor-container(ng-init="editor.load('#{id}')")
     include editor-sidebar
     #editor
     #preview
