@@ -1,0 +1,11 @@
+/*
+  Edit your "dot" language and click "Run" button.
+  Then the result will appear on preview area.
+  http://www.graphviz.org/content/dot-language
+*/
+
+digraph G {
+  Hello -> World;
+  World -> Beautiful;
+  Life -> Beautiful;
+}
