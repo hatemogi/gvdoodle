@@ -8,6 +8,10 @@
       # editor.getSession().setUseWrapMode true
       editor.focus()
 
+      this.engine = 'dot'
+      this.preview = 'preview.svgz'
+      this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
+
       self = this
       loadSVG = (data, status) ->
         $scope.svg = $sce.trustAsHtml(data)
@@ -17,9 +21,6 @@
 
       this.loadSaved = (gvid) ->
         $http.get("/#{gvid}.svg").success(loadSVG)
-      this.engine = 'dot'
-      this.preview = 'preview.svgz'
-      this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
       this.run = (e) ->
         # $http.defaults.headers.post["Content-Type"] = "text/plain"
         $http.post("/preview", {
@@ -35,9 +36,10 @@
         $http.get("/#{id}.meta").success((data, status) ->
           if data && data.engine
             self.engine = data.engine
+          status
         )
-        this.svg_url = "/#{id}.svgz"
+        self.svg_url = "/#{id}.svgz"
         self.show_preview = false
-        console.log id
+        id
       this
     ]

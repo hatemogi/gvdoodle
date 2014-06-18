@@ -6,6 +6,9 @@
       editor.setTheme("ace/theme/tomorrow");
       editor.getSession().setMode("ace/mode/dot");
       editor.focus();
+      this.engine = 'dot';
+      this.preview = 'preview.svgz';
+      this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo'];
       self = this;
       loadSVG = function(data, status) {
         $scope.svg = $sce.trustAsHtml(data);
@@ -15,9 +18,6 @@
       this.loadSaved = function(gvid) {
         return $http.get("/" + gvid + ".svg").success(loadSVG);
       };
-      this.engine = 'dot';
-      this.preview = 'preview.svgz';
-      this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo'];
       this.run = function(e) {
         return $http.post("/preview", {
           text: editor.getValue(),
@@ -33,12 +33,13 @@
         });
         $http.get("/" + id + ".meta").success(function(data, status) {
           if (data && data.engine) {
-            return self.engine = data.engine;
+            self.engine = data.engine;
           }
+          return status;
         });
-        this.svg_url = "/" + id + ".svgz";
+        self.svg_url = "/" + id + ".svgz";
         self.show_preview = false;
-        return console.log(id);
+        return id;
       };
       return this;
     }
