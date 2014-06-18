@@ -28,7 +28,7 @@ module.exports = (grunt) ->
             "public/bower_components/ace-builds/src/theme-tomorrow.js"
             "public/bower_components/underscore/underscore.js"
             "public/bower_components/jquery/dist/jquery.js"
-            "public/bower_components/bootstrap/dist/bootstrap.js"
+            "public/bower_components/bootstrap/dist/js/bootstrap.js"
           ]
         }
       }
