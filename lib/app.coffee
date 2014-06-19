@@ -4,12 +4,12 @@ favicon = require("static-favicon")
 appLogger = require("morgan")
 cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
-routes = require("./routes/index")
-users = require("./routes/users")
+routes = require("../routes/index")
+users = require("../routes/users")
 app = express()
 
 # view engine setup
-app.set "views", path.join(__dirname, "views")
+app.set "views", path.join(__dirname, "../views")
 app.set "view engine", "jade"
 app.use favicon()
 app.use appLogger("dev")
@@ -23,7 +23,7 @@ app.use (req, res, next) ->
 app.use bodyParser.json({limit: '1mb'})
 app.use bodyParser.urlencoded()
 app.use cookieParser()
-app.use express.static(path.join(__dirname, "public"))
+app.use express.static(path.join(__dirname, "../public"))
 app.use "/", routes
 app.use "/users", users
 
