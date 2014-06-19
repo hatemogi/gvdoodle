@@ -1,5 +1,9 @@
 (function() {
-  angular.module("gvdoodle", []).controller("EditorCtrl", [
+  var app;
+
+  app = angular.module("gvdoodle", []);
+
+  app.controller("EditorCtrl", [
     '$scope', '$http', '$sce', function($scope, $http, $sce) {
       var editor, loadSVG, self;
       window.editor = editor = ace.edit("editor");
@@ -10,21 +14,27 @@
       this.preview = 'preview.svgz';
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo'];
       self = this;
+      self.isLoading = false;
       loadSVG = function(data, status) {
         $scope.svg = $sce.trustAsHtml(data);
         self.show_preview = true;
+        self.isLoading = false;
         return console.log(['success', data]);
       };
       this.loadSaved = function(gvid) {
         return $http.get("/" + gvid + ".svg").success(loadSVG);
       };
       this.run = function(e) {
+        self.isLoading = true;
         return $http.post("/preview", {
           text: editor.getValue(),
           engine: self.engine
         }).success(loadSVG).error(function(res) {
           return console.log(['error', res]);
         });
+      };
+      this.img_load = function(e) {
+        return console.dir(e);
       };
       this.load = function(id) {
         $http.get("/" + id + ".gv").success(function(data, status) {
@@ -44,6 +54,16 @@
       return this;
     }
   ]);
+
+  app.directive('resizable', function() {
+    return {
+      link: function(scope, e, attrs) {
+        return e.bind('load', function(ev) {
+          return console.dir([e[0].width, e[0].height]);
+        });
+      }
+    };
+  });
 
 }).call(this);
 
