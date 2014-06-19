@@ -1,11 +1,8 @@
 app = angular.module("gvdoodle", [])
 app.controller "EditorCtrl", ['$scope', '$http', '$sce', ($scope, $http, $sce) ->
   window.editor = editor = ace.edit("editor")
-  # editor.setTheme("ace/theme/clouds")
   editor.setTheme("ace/theme/tomorrow")
-  # editor.setTheme("ace/theme/crimson_editor")
   editor.getSession().setMode("ace/mode/dot")
-  # editor.getSession().setUseWrapMode true
   editor.focus()
 
   this.engine = 'dot'
@@ -24,7 +21,6 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', ($scope, $http, $sce) -
   this.loadSaved = (gvid) ->
     $http.get("/#{gvid}.svg").success(loadSVG)
   this.run = (e) ->
-    # $http.defaults.headers.post["Content-Type"] = "text/plain"
     self.isLoading = true
     $http.post("/preview", {
       text: editor.getValue()
