@@ -1,5 +1,5 @@
 require("./helper")
-app = require("../app")
+app = require("../lib/app")
 request = require("supertest")
 
 describe "express 앱", ->
