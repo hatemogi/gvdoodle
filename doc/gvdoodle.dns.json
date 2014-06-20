@@ -44,6 +44,16 @@
             ],
             "ttl": 600,
             "type": "A"
+        },
+        {
+            "kind": "dns#resourceRecordSet",
+            "name": "beta.gvdoodle.com.",
+            "rrdatas": [
+                "130.211.184.94"
+            ],
+            "ttl": 3600,
+            "type": "A"
         }
+
     ]
 }
