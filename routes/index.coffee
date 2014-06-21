@@ -20,8 +20,10 @@ storeGoogleFactory = ->
   else
     google "store.gvdoodle.com"
 
-# store = storeFileFactory()
-store = storeGoogleFactory()
+store = if process.env.GV_STORE == 'local'
+  storeFileFactory()
+else
+  storeGoogleFactory()
 
 router = express.Router()
 
@@ -35,14 +37,24 @@ router.get /^\/[0-9A-Z]{5,6}$/, (req, res) ->
   return res.send(404) unless gvid.valid(id)
   res.render "editor", {gvid: id}
 
-router.get /^\/[0-9A-Z]{5,6}\.svg$/, (req, res) ->
-  res.end "request.svg for #{req.path}"
+router.get /^\/[0-9A-Z]{5,6}\.(gv|meta|svgz?)$/, (req, res) ->
+  logger.debug "#{req.path} should have been served by nginx"
+  name = req.path.replace(/^\//, '')
+  res.type switch
+    when /gv$/.test name then 'text/vnd.graphviz'
+    when /meta$/.test name then 'application/json'
+    when /svgz?$/.test name then 'image/svg+xml'
+    else 'application/octet-stream'
+  store.readFile name, (err, content) ->
+    logger.debug content.toString()
+    return res.send(500) if err
+    res.send content
 
 router.post "/preview", (req, res) ->
   engine = req.body.engine || 'dot'
-  logger.debug "engine: #{engine}"
+  logger.debug "preview request [engine: #{engine}]"
+  logger.debug req.body.text
   dot_runner.preview engine, req.body.text, (err, svg) ->
-    # console.log ["result", svg]
     res.end svg
 
 router.post "/publish", (req, res) ->

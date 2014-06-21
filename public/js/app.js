@@ -11,7 +11,7 @@
       editor.getSession().setMode("ace/mode/dot");
       editor.focus();
       this.engine = 'dot';
-      this.preview = 'preview.svgz';
+      this.preview = 'preview.svg';
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo'];
       self = this;
       self.isLoading = false;
@@ -47,7 +47,7 @@
           }
           return status;
         });
-        self.svg_url = "/" + id + ".svgz";
+        self.svg_url = "/" + id + ".svg";
         self.show_preview = false;
         return id;
       };

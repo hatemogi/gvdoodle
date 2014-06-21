@@ -7,7 +7,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce',
     editor.focus()
 
     this.engine = 'dot'
-    this.preview = 'preview.svgz'
+    this.preview = 'preview.svg'
     this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
 
     self = this
@@ -40,7 +40,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce',
           self.engine = data.engine
         status
       )
-      self.svg_url = "/#{id}.svgz"
+      self.svg_url = "/#{id}.svg"
       self.show_preview = false
       id
     this
