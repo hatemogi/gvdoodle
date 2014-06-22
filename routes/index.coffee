@@ -46,8 +46,8 @@ router.get /^\/[0-9A-Z]{5,6}\.(gv|meta|svgz?)$/, (req, res) ->
     when /svgz?$/.test name then 'image/svg+xml'
     else 'application/octet-stream'
   store.readFile name, (err, content) ->
-    logger.debug content.toString()
     return res.send(500) if err
+    logger.debug content.toString()
     res.send content
 
 router.post "/preview", (req, res) ->
