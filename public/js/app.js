@@ -33,6 +33,18 @@
           return console.log(['error', res]);
         });
       };
+      this.publish = function(e) {
+        self.isLoading = true;
+        return $http.post("/publish", {
+          text: editor.getValue(),
+          engine: self.engine
+        }).success(function(data, status) {
+          console.log("publish success");
+          return console.log(data);
+        }).error(function(res) {
+          return console.log(['publish error', res]);
+        });
+      };
       this.img_load = function(e) {
         return console.dir(e);
       };

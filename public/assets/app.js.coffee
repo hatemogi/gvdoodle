@@ -28,6 +28,16 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce',
         engine: self.engine
       }).success(loadSVG).error (res) ->
         console.log ['error', res]
+    this.publish = (e) ->
+      self.isLoading = true
+      $http.post("/publish", {
+        text: editor.getValue()
+        engine: self.engine
+      }).success((data, status) ->
+        console.log "publish success"
+        console.log data
+      ).error (res) ->
+        console.log ['publish error', res]
     this.img_load = (e) ->
       console.dir e
     this.load = (id) ->

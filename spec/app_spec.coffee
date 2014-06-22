@@ -13,8 +13,16 @@ describe "express 앱", ->
     body = "digraph G {\n d1 -> d2 -> d3; d1 -> d4; }"
     request(app).post("/preview").send({text: body})
       .expect(200)
+      .expect(/svg/)
       .end done
   it "GET /TEST1 - 소스 읽기", (done) ->
     request(app).get("/TEST1")
       .expect(200)
+      .end done
+  it 'POST /publish', (done) ->
+    body = "digraph G {\n d1 -> d2 -> d3; d1 -> d4; }"
+    request(app).post("/publish").send({text: body})
+      .expect(200)
+      .expect(/gvid/)
+      .expect(/[A-Z0-9]{5}/)
       .end done

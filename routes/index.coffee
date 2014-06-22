@@ -6,6 +6,7 @@ StoreGoogle = require("../lib/store_google")
 logger = require("../lib/logger")
 
 storeFileFactory = ->
+  logger.info("storeFile is ready")
   if process.env.NODE_ENV == 'test'
     new StoreFile("store.test")
   else
@@ -58,7 +59,13 @@ router.post "/preview", (req, res) ->
     res.end svg
 
 router.post "/publish", (req, res) ->
-  id = gvid()
-  res.redirect("/#{id}")
+  engine = req.body.engine || 'dot'
+  meta = {engine: engine, parent: "EMPTY"}
+  dot = req.body.text
+  store.saveSource meta, dot, (err, id) ->
+    dot_runner.preview engine, dot, (err, svg) ->
+      console.log "saving... #{id}"
+      store.writeFile "#{id}.svg", svg, (err) ->
+        res.send({gvid: id})
 
 module.exports = router
