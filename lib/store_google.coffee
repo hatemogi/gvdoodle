@@ -18,20 +18,21 @@ StoreGoogle.prototype.writeFile = (name, content, cb) ->
   type = switch
     when /\.gv$/.test name then "text/vnd.graphviz"
     when /\.meta$/.test name then "application/json"
-    when /\.svgz?$/.test name then "image/svg+xml"
+    when /\.svg$/.test name then "image/svg+xml"
     else "application/octet-stream"
 
+  console.log "set type as #{type} for #{name}"
   authToken((err, token) ->
     return cb(err) if err
     unirest.post("https://www.googleapis.com/upload/storage/v1/b/#{root}/o")
-      .type(type)
+      .set("Content-Type", type)
       .query({
         uploadType: 'media'
         name: name
         predefinedAcl: 'publicRead'
       })
       .headers({"Authorization": "Bearer #{token}"})
-      .send(content).end (res) ->
+      .send(content.toString()).end (res) ->
         if res.code == 200
           cb()
         else

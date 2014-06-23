@@ -1,8 +1,10 @@
 describe 'Store (Google)', ->
   StoreGoogle = require("../lib/store_google")
-  store = new StoreGoogle("store.test.gvdoodle.com")
+  HOST = "store.test.gvdoodle.com"
+  store = new StoreGoogle(HOST)
   gvid = require("../lib/gvid")
   async = require("async")
+  unirest = require("unirest")
 
   it 'save & load source', (done) ->
     meta = {engine: 'dot', seed: Math.random()}
@@ -21,3 +23,10 @@ describe 'Store (Google)', ->
         expect(m).toEqual meta
         cb()
     ], done
+  it 'saves a svg file with proper mime-type', (done) ->
+    store.writeFile 'TEST6.svg', new Buffer('<svg></svg>'), (err) ->
+      return done(err) if err
+      unirest.get "http://#{HOST}/TEST6.svg", (res) ->
+        expect(res.status).toBe(200)
+        expect(res.headers["content-type"]).toEqual("image/svg+xml")
+        done()

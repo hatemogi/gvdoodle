@@ -65,6 +65,7 @@ router.post "/publish", (req, res) ->
   store.saveSource meta, dot, (err, id) ->
     dot_runner.preview engine, dot, (err, svg) ->
       console.log "saving... #{id}"
+      console.log svg
       store.writeFile "#{id}.svg", svg, (err) ->
         res.send({gvid: id})
 
