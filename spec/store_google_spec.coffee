@@ -24,9 +24,10 @@ describe 'Store (Google)', ->
         cb()
     ], done
   it 'saves a svg file with proper mime-type', (done) ->
-    store.writeFile 'TEST6.svg', new Buffer('<svg></svg>'), (err) ->
+    id = gvid()
+    store.writeFile "#{id}.svg", new Buffer('<svg></svg>'), (err) ->
       return done(err) if err
-      unirest.get "http://#{HOST}/TEST6.svg", (res) ->
+      unirest.get "http://#{HOST}/#{id}.svg", (res) ->
         expect(res.status).toBe(200)
         expect(res.headers["content-type"]).toEqual("image/svg+xml")
         done()
