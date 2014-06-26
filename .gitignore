@@ -7,3 +7,4 @@ store.test/*
 cache/*
 log/*
 password
+npm-debug.log
