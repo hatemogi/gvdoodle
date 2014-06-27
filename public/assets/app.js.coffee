@@ -34,8 +34,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce',
         text: editor.getValue()
         engine: self.engine
       }).success((data, status) ->
-        console.log "publish success"
-        console.log data
+        window.location.href = "/#{data.gvid}"
       ).error (res) ->
         console.log ['publish error', res]
     this.img_load = (e) ->

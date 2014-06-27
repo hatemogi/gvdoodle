@@ -39,8 +39,7 @@
           text: editor.getValue(),
           engine: self.engine
         }).success(function(data, status) {
-          console.log("publish success");
-          return console.log(data);
+          return window.location.href = "/" + data.gvid;
         }).error(function(res) {
           return console.log(['publish error', res]);
         });
