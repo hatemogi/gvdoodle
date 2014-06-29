@@ -23,6 +23,8 @@ module.exports = (grunt) ->
         files: {
           "public/js/vendor.min.js": [
             "public/bower_components/angular/angular.js"
+            "public/bower_components/angular-ui/angular-ui.js"
+            "public/bower_components/angular-ui-bootstrap-bower/ui-bootstrap.js"
             "public/bower_components/ace-builds/src/ace.js"
             "public/bower_components/ace-builds/src/mode-dot.js"
             "public/bower_components/ace-builds/src/theme-tomorrow.js"
