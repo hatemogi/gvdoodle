@@ -1,5 +1,6 @@
 TODO
 ==========
+* store.gvdoodle.com 대신 단축도메인 (gvdo.co or gvd.kr) 구매할까?
 * examples 페이지 별도 작성 (프리뷰와 함께)
 * 500.html 작성
 * ACE 에디터 본문 부분이 깜빡이는 것이 거슬림
@@ -14,7 +15,7 @@ TODO
 
 FIX
 ===========
-
+* nginx proxy cache에 gzip 데이타가 남는데, 이후 전송될때는 gzip인코딩으로 전송되지 않음
 
 DONE
 ===========
