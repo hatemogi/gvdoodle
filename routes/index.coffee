@@ -69,4 +69,7 @@ router.post "/publish", (req, res) ->
       store.writeFile "#{id}.svg", svg, (err) ->
         res.send({gvid: id})
 
+router.get "/template/:template", (req, res) ->
+  res.render "template/#{req.params.template}"
+
 module.exports = router
