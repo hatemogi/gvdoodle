@@ -1,10 +1,10 @@
 (function() {
   var app;
 
-  app = angular.module("gvdoodle", []);
+  app = angular.module("gvdoodle", ["ui.bootstrap"]);
 
   app.controller("EditorCtrl", [
-    '$scope', '$http', '$sce', function($scope, $http, $sce) {
+    '$scope', '$http', '$sce', '$modal', function($scope, $http, $sce, $modal) {
       var editor, loadSVG, self;
       window.editor = editor = ace.edit("editor");
       editor.setTheme("ace/theme/tomorrow");
@@ -15,6 +15,7 @@
       this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo'];
       self = this;
       self.isLoading = false;
+      self.show_preview = false;
       loadSVG = function(data, status) {
         $scope.svg = $sce.trustAsHtml(data);
         self.show_preview = true;
@@ -31,6 +32,11 @@
           engine: self.engine
         }).success(loadSVG).error(function(res) {
           return console.log(['error', res]);
+        });
+      };
+      this.publishModal = function(e) {
+        return $modal.open({
+          templateUrl: "template/publish"
         });
       };
       this.publish = function(e) {

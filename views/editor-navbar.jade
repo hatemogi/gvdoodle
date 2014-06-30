@@ -6,8 +6,10 @@
           a(href ng-click="editor.run()")
             i.fa.fa-play
             |  Run
-        li
-          a(href ng-click="editor.publish()")
+        li(ng-class="{disabled: true}")
+          a(href ng-click="editor.publishModal()"
+            popover-placement="bottom" popover-trigger="mouseenter"
+            popover-title="타이틀" popover="팝오버")
             i.fa.fa-check-square-o
             |  Publish
         //- li

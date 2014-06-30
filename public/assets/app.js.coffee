@@ -1,6 +1,6 @@
-app = angular.module("gvdoodle", [])
-app.controller "EditorCtrl", ['$scope', '$http', '$sce',
-  ($scope, $http, $sce) ->
+app = angular.module("gvdoodle", ["ui.bootstrap"])
+app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
+  ($scope, $http, $sce, $modal) ->
     window.editor = editor = ace.edit("editor")
     editor.setTheme("ace/theme/tomorrow")
     editor.getSession().setMode("ace/mode/dot")
@@ -12,6 +12,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce',
 
     self = this
     self.isLoading = false
+    self.show_preview = false
     loadSVG = (data, status) ->
       $scope.svg = $sce.trustAsHtml(data)
       self.show_preview = true
@@ -28,6 +29,10 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce',
         engine: self.engine
       }).success(loadSVG).error (res) ->
         console.log ['error', res]
+    this.publishModal = (e) ->
+      $modal.open {
+        templateUrl: "template/publish"
+      }
     this.publish = (e) ->
       self.isLoading = true
       $http.post("/publish", {

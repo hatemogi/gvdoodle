@@ -1,8 +1,15 @@
 div
   .modal-header
-    .modal-title modal title
+    .modal-title
+      h3 Are you sure to publish your graph?
   .modal-body
-    | 모달 본문
+    | Please note that, after publishing,
+    ul
+      li Your work will be publicly visible to whom knows the URL.
+      li You can share / embed your graph (SVG) from anywhere.
   .modal-footer
+    label.checkbox.pull-left(style="padding-left: 20px;")
+      input(type="checkbox")
+      | Skip showing this message from now on.
     button.btn.btn-primary 확인
     button.btn.btn-warning 삭제
