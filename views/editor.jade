@@ -7,5 +7,5 @@ block content
     #preview
       i.fa.fa-spinner.fa-spin.fa-2x(ng-show="editor.isLoading")
       .preview(ng-hide="editor.isLoading")
-        #output.animate-if(ng-bind-html="svg" ng-show="editor.show_preview")
-        img.animate-if(ng-src="{{editor.svg_url}}" ng-hide="editor.show_preview" resizable)
+        #output.animate-if(ng-bind-html="svg" ng-show="editor.showPreview")
+        img.animate-if(ng-src="{{editor.svg_url}}" ng-hide="editor.showPreview" resizable)

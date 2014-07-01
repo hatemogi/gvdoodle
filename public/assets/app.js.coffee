@@ -1,21 +1,27 @@
 app = angular.module("gvdoodle", ["ui.bootstrap"])
 app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
   ($scope, $http, $sce, $modal) ->
+    self = this
+    self.isLoading = false
+    self.showPreview = false
+    self.changed = false
+
     window.editor = editor = ace.edit("editor")
     editor.setTheme("ace/theme/tomorrow")
     editor.getSession().setMode("ace/mode/dot")
     editor.focus()
-
+    editor.on "change", () ->
+      return unless !!self.loadedValue
+      before = self.changed
+      self.changed = editor.getValue() != self.loadedValue
+      $scope.$apply() unless before == self.changed
     this.engine = 'dot'
     this.preview = 'preview.svg'
     this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
 
-    self = this
-    self.isLoading = false
-    self.show_preview = false
     loadSVG = (data, status) ->
       $scope.svg = $sce.trustAsHtml(data)
-      self.show_preview = true
+      self.showPreview = true
       self.isLoading = false
       console.log ['success', data]
       # $('#output svg').attr("width", "100%").attr("height", "100%")
@@ -48,6 +54,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
       $http.get("/#{id}.gv").success((data, status) ->
         editor.setValue data
         editor.clearSelection()
+        self.loadedValue = data
       )
       $http.get("/#{id}.meta").success((data, status) ->
         if data && data.engine
@@ -55,7 +62,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
         status
       )
       self.svg_url = "/#{id}.svg"
-      self.show_preview = false
+      self.showPreview = false
       id
     this
 ]
