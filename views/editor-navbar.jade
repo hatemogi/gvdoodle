@@ -8,27 +8,18 @@
             |  Run
         li(ng-class="{disabled: !editor.changed}")
           a(href ng-click="editor.publishModal()"
-            popover-placement="bottom" popover-trigger="mouseenter"
-            popover="Nothing's changed")
+            popover-placement="bottom" popover="Nothing has changed. There is no need to publish."
+            popover-append-to-body="true"
+            popover-popup-delay="300"
+            popover-trigger="{{!editor.changed ? 'mouseenter' : 'none' }}")
             i.fa.fa-check-square-o
             |  Publish
-        //- li
-          a(href="/")
-            i.fa.fa-code-fork
-            |  Fork
-        //- li.dropdown
-          a.dropdown-toggle(href data-toggle="dropdown")
-            i.fa.fa-clipboard
-            |  Examples
-            b.caret
-            ul.dropdown-menu
-              li
-                a(href) Action
-              li.divider
-              li
-                a(href) Action 2
-        li.dropdown
-          a.dropdown-toggle(href data-toggle="dropdown")
+        li.dropdown(ng-class="{disabled: editor.changed}")
+          a.dropdown-toggle(href data-toggle="dropdown"
+            popover-placement="bottom" popover="Something has changed. You need to publish it before sharing."
+            popover-append-to-body="true"
+            popover-popup-delay="300"
+            popover-trigger="{{editor.changed ? 'mouseenter' : 'none' }}")
             i.fa.fa-share
             |  Share
             b.caret
