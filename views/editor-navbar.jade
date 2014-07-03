@@ -6,38 +6,34 @@
           a(href ng-click="editor.run()")
             i.fa.fa-play
             |  Run
-        li(ng-class="{disabled: !editor.changed}")
-          a(href ng-click="editor.publishModal()"
+        li(ng-class="{disabled: !editor.changed()}")
+          a(href
+            ng-click="editor.publishModal()"
             popover-placement="bottom" popover="Nothing has changed. There is no need to publish."
             popover-append-to-body="true"
             popover-popup-delay="300"
-            popover-trigger="{{!editor.changed ? 'mouseenter' : 'none' }}")
+            popover-trigger="{{!editor.changed() ? 'mouseenter' : 'none' }}")
             i.fa.fa-check-square-o
             |  Publish
-        li.dropdown(ng-class="{disabled: editor.changed}")
-          a.dropdown-toggle(href data-toggle="dropdown"
-            popover-placement="bottom" popover="Something has changed. You need to publish it before sharing."
-            popover-append-to-body="true"
-            popover-popup-delay="300"
-            popover-trigger="{{editor.changed ? 'mouseenter' : 'none' }}")
+        li(dropdown ng-show="editor.id != 'NEWT1' && !editor.changed()")
+          a.dropdown-toggle(href)
             i.fa.fa-share
             |  Share
             b.caret
-            ul.dropdown-menu
-              li
-                a(href)
-                  i.fa.fa-twitter
-                  |  twitter
-              li
-                a(href)
-                  i.fa.fa-facebook
-                  |  facebook
-              li.divider
-              li
-                a(href)
-                  i.fa.fa-quote-left
-                  |  embed
-
+          ul.dropdown-menu
+            li
+              a(href)
+                i.fa.fa-twitter
+                |  twitter
+            li
+              a(href)
+                i.fa.fa-facebook
+                |  facebook
+            li.divider
+            li
+              a(href)
+                i.fa.fa-quote-left
+                |  embed
         //- li
           a(href="/")
             i.fa.fa-info-circle

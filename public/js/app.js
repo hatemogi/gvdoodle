@@ -5,11 +5,16 @@
 
   app.controller("EditorCtrl", [
     '$scope', '$http', '$sce', '$modal', function($scope, $http, $sce, $modal) {
-      var editor, loadSVG, self;
+      var editor, loadSVG, reset, self;
       self = this;
-      self.isLoading = false;
-      self.showPreview = false;
-      self.changed = false;
+      reset = function() {
+        self.isLoading = false;
+        self.showPreview = false;
+        return self.gvChanged = false;
+      };
+      self.changed = function() {
+        return this.gvChanged || this.ranEngine !== this.engine;
+      };
       window.editor = editor = ace.edit("editor");
       editor.setTheme("ace/theme/tomorrow");
       editor.getSession().setMode("ace/mode/dot");
@@ -19,9 +24,9 @@
         if (!self.loadedValue) {
           return;
         }
-        before = self.changed;
-        self.changed = editor.getValue() !== self.loadedValue;
-        if (before !== self.changed) {
+        before = self.gvChanged;
+        self.gvChanged = editor.getValue() !== self.loadedValue;
+        if (before !== self.gvChanged) {
           return $scope.$apply();
         }
       });
@@ -39,6 +44,7 @@
       };
       this.run = function(e) {
         self.isLoading = true;
+        self.ranEngine = self.engine;
         return $http.post("/preview", {
           text: editor.getValue(),
           engine: self.engine
@@ -47,9 +53,11 @@
         });
       };
       this.publishModal = function(e) {
-        return $modal.open({
-          templateUrl: "template/publish"
-        });
+        if (self.changed()) {
+          return $modal.open({
+            templateUrl: "template/publish"
+          });
+        }
       };
       this.publish = function(e) {
         self.isLoading = true;
@@ -66,6 +74,7 @@
         return console.dir(e);
       };
       this.load = function(id) {
+        self.id = id;
         $http.get("/" + id + ".gv").success(function(data, status) {
           editor.setValue(data);
           editor.clearSelection();
@@ -73,7 +82,7 @@
         });
         $http.get("/" + id + ".meta").success(function(data, status) {
           if (data && data.engine) {
-            self.engine = data.engine;
+            self.engine = self.ranEngine = data.engine;
           }
           return status;
         });
@@ -88,9 +97,7 @@
   app.directive('resizable', function() {
     return {
       link: function(scope, e, attrs) {
-        return e.bind('load', function(ev) {
-          return console.dir([e[0].width, e[0].height]);
-        });
+        return e.bind('load', function(ev) {});
       }
     };
   });

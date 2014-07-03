@@ -2,9 +2,12 @@ app = angular.module("gvdoodle", ["ui.bootstrap"])
 app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
   ($scope, $http, $sce, $modal) ->
     self = this
-    self.isLoading = false
-    self.showPreview = false
-    self.changed = false
+    reset = ->
+      self.isLoading = false
+      self.showPreview = false
+      self.gvChanged = false
+    self.changed = ->
+      this.gvChanged || this.ranEngine != this.engine
 
     window.editor = editor = ace.edit("editor")
     editor.setTheme("ace/theme/tomorrow")
@@ -12,9 +15,9 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
     editor.focus()
     editor.on "change", () ->
       return unless !!self.loadedValue
-      before = self.changed
-      self.changed = editor.getValue() != self.loadedValue
-      $scope.$apply() unless before == self.changed
+      before = self.gvChanged
+      self.gvChanged = editor.getValue() != self.loadedValue
+      $scope.$apply() unless before == self.gvChanged
     this.engine = 'dot'
     this.preview = 'preview.svg'
     this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
@@ -30,15 +33,17 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
       $http.get("/#{gvid}.svg").success(loadSVG)
     this.run = (e) ->
       self.isLoading = true
+      self.ranEngine = self.engine
       $http.post("/preview", {
         text: editor.getValue()
         engine: self.engine
       }).success(loadSVG).error (res) ->
         console.log ['error', res]
     this.publishModal = (e) ->
-      $modal.open {
-        templateUrl: "template/publish"
-      }
+      if self.changed()
+        $modal.open {
+          templateUrl: "template/publish"
+        }
     this.publish = (e) ->
       self.isLoading = true
       $http.post("/publish", {
@@ -51,6 +56,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
     this.img_load = (e) ->
       console.dir e
     this.load = (id) ->
+      self.id = id
       $http.get("/#{id}.gv").success((data, status) ->
         editor.setValue data
         editor.clearSelection()
@@ -58,7 +64,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
       )
       $http.get("/#{id}.meta").success((data, status) ->
         if data && data.engine
-          self.engine = data.engine
+          self.engine = self.ranEngine = data.engine
         status
       )
       self.svg_url = "/#{id}.svg"
@@ -71,6 +77,6 @@ app.directive 'resizable', ->
   {
     link: (scope, e, attrs) ->
       e.bind 'load', (ev) ->
-        console.dir [e[0].width, e[0].height]
+        # console.dir [e[0].width, e[0].height]
         # e[0].width = 500
   }
