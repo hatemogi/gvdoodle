@@ -11,5 +11,5 @@ div
     label.checkbox.pull-left(style="padding-left: 20px;")
       input(type="checkbox")
       | Skip showing this message from now on.
-    button.btn.btn-primary 확인
-    button.btn.btn-warning 삭제
+    button.btn.btn-default(ng-click="$dismiss()") Cancel
+    button.btn.btn-primary(ng-click="$close()") Publish

@@ -41,10 +41,14 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
         console.log ['error', res]
     this.publishModal = (e) ->
       if self.changed()
-        $modal.open {
+        modal = $modal.open {
+          scope: $scope
           templateUrl: "template/publish"
         }
+        modal.result.then (e) ->
+          self.publish()
     this.publish = (e) ->
+      console.log "publish called"
       self.isLoading = true
       $http.post("/publish", {
         text: editor.getValue()

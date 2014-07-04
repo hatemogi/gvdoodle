@@ -53,13 +53,19 @@
         });
       };
       this.publishModal = function(e) {
+        var modal;
         if (self.changed()) {
-          return $modal.open({
+          modal = $modal.open({
+            scope: $scope,
             templateUrl: "template/publish"
+          });
+          return modal.result.then(function(e) {
+            return self.publish();
           });
         }
       };
       this.publish = function(e) {
+        console.log("publish called");
         self.isLoading = true;
         return $http.post("/publish", {
           text: editor.getValue(),
