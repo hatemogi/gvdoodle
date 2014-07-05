@@ -6,15 +6,6 @@
           a(href ng-click="editor.run()")
             i.fa.fa-play
             |  Run
-        li(ng-class="{disabled: !editor.changed()}")
-          a(href
-            ng-click="editor.publishModal()"
-            popover-placement="bottom" popover="Nothing has changed. There is no need to publish."
-            popover-append-to-body="true"
-            popover-popup-delay="300"
-            popover-trigger="{{!editor.changed() ? 'mouseenter' : 'none' }}")
-            i.fa.fa-check-square-o
-            |  Publish
         li(dropdown ng-show="editor.id != 'NEWT1' && !editor.changed()")
           a.dropdown-toggle(href)
             i.fa.fa-share

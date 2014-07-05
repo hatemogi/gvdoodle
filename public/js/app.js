@@ -10,7 +10,8 @@
       reset = function() {
         self.isLoading = false;
         self.showPreview = false;
-        return self.gvChanged = false;
+        self.gvChanged = false;
+        return self.runSuccess = false;
       };
       self.changed = function() {
         return this.gvChanged || this.ranEngine !== this.engine;
@@ -27,6 +28,7 @@
         before = self.gvChanged;
         self.gvChanged = editor.getValue() !== self.loadedValue;
         if (before !== self.gvChanged) {
+          self.runSuccess = false;
           return $scope.$apply();
         }
       });
@@ -37,7 +39,8 @@
         $scope.svg = $sce.trustAsHtml(data);
         self.showPreview = true;
         self.isLoading = false;
-        return console.log(['success', data]);
+        self.runSuccess = !!data.match(/<svg/);
+        return console.log(['success', data, status]);
       };
       this.loadSaved = function(gvid) {
         return $http.get("/" + gvid + ".svg").success(loadSVG);

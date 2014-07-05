@@ -5,11 +5,11 @@ div
   .modal-body
     | Please note that, after publishing,
     ul
-      li Your work will be publicly visible to whom knows the URL.
+      li Your work will be publicly visible to anyone knows the URL.
       li You can share / embed your graph (SVG) from anywhere.
   .modal-footer
     label.checkbox.pull-left(style="padding-left: 20px;")
-      input(type="checkbox")
+      input(type="checkbox" ng-model="nevershow")
       | Skip showing this message from now on.
     button.btn.btn-default(ng-click="$dismiss()") Cancel
     button.btn.btn-primary(ng-click="$close()") Publish

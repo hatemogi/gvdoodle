@@ -6,9 +6,9 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
       self.isLoading = false
       self.showPreview = false
       self.gvChanged = false
+      self.runSuccess = false
     self.changed = ->
       this.gvChanged || this.ranEngine != this.engine
-
     window.editor = editor = ace.edit("editor")
     editor.setTheme("ace/theme/tomorrow")
     editor.getSession().setMode("ace/mode/dot")
@@ -17,7 +17,9 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
       return unless !!self.loadedValue
       before = self.gvChanged
       self.gvChanged = editor.getValue() != self.loadedValue
-      $scope.$apply() unless before == self.gvChanged
+      unless before == self.gvChanged
+        self.runSuccess = false
+        $scope.$apply()
     this.engine = 'dot'
     this.preview = 'preview.svg'
     this.engines = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
@@ -26,7 +28,8 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
       $scope.svg = $sce.trustAsHtml(data)
       self.showPreview = true
       self.isLoading = false
-      console.log ['success', data]
+      self.runSuccess = !!data.match(/<svg/)
+      console.log ['success', data, status]
       # $('#output svg').attr("width", "100%").attr("height", "100%")
 
     this.loadSaved = (gvid) ->
