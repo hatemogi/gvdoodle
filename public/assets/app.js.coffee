@@ -7,8 +7,13 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
       self.showPreview = false
       self.gvChanged = false
       self.runSuccess = false
+      self.flash = sessionStorage.getItem("flash")
+      sessionStorage.removeItem("flash")
+    reset()
     self.changed = ->
       this.gvChanged || this.ranEngine != this.engine
+    self.showPublishButton = ->
+      this.changed() && this.runSuccess && !this.isLoading
     window.editor = editor = ace.edit("editor")
     editor.setTheme("ace/theme/tomorrow")
     editor.getSession().setMode("ace/mode/dot")
@@ -57,6 +62,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
         text: editor.getValue()
         engine: self.engine
       }).success((data, status) ->
+        sessionStorage.setItem("flash", "Published!")
         window.location.href = "/#{data.gvid}"
       ).error (res) ->
         console.log ['publish error', res]

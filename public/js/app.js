@@ -11,10 +11,16 @@
         self.isLoading = false;
         self.showPreview = false;
         self.gvChanged = false;
-        return self.runSuccess = false;
+        self.runSuccess = false;
+        self.flash = sessionStorage.getItem("flash");
+        return sessionStorage.removeItem("flash");
       };
+      reset();
       self.changed = function() {
         return this.gvChanged || this.ranEngine !== this.engine;
+      };
+      self.showPublishButton = function() {
+        return this.changed() && this.runSuccess && !this.isLoading;
       };
       window.editor = editor = ace.edit("editor");
       editor.setTheme("ace/theme/tomorrow");
@@ -74,6 +80,7 @@
           text: editor.getValue(),
           engine: self.engine
         }).success(function(data, status) {
+          sessionStorage.setItem("flash", "Published!");
           return window.location.href = "/" + data.gvid;
         }).error(function(res) {
           return console.log(['publish error', res]);

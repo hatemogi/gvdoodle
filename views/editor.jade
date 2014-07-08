@@ -5,9 +5,10 @@ block content
     include editor-sidebar
     #editor
     #preview
+      | {{ editor.flash }}
       i.fa.fa-spinner.fa-spin.fa-2x(ng-show="editor.isLoading")
       .preview(ng-hide="editor.isLoading")
         #output.animate-if(ng-bind-html="svg" ng-show="editor.showPreview")
         img.animate-if(ng-src="{{editor.svg_url}}" ng-hide="editor.showPreview" resizable)
       .buttons
-        button.btn.btn-default(ng-show="editor.changed() && editor.runSuccess") Publish
+        button.btn.btn-default(ng-show="editor.showPublishButton()" ng-click="editor.publish()") Publish
