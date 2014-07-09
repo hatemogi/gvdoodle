@@ -21,4 +21,3 @@ describe 'Store (File)', ->
         expect(m).toEqual meta
         cb()
     ], done
-

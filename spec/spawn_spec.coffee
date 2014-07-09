@@ -18,4 +18,3 @@ describe 'graphviz', ->
         fs.close(fd)
     dot.stdin.write "digraph G { 한글 -> t -> p;}"
     dot.stdin.end()
-
