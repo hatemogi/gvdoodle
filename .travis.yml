@@ -10,5 +10,4 @@ deploy:
   on:
     repo: hatemogi/holiday-project
 env:
-  - SKIP_DOT_TEST=true
-  - SKIP_GOOGLE_STORAGE_TEST=true
+  - SKIP_DOT_TEST=true SKIP_GOOGLE_STORAGE_TEST=true
