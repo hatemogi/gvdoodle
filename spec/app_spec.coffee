@@ -19,16 +19,18 @@ describe "express 앱", ->
     request(app).get("/TEST1")
       .expect(200)
       .end done
-  it('POST /publish', (done) ->
-    body = "digraph G {\n d1 -> d2 -> d3; d1 -> d4; }"
-    request(app).post("/publish").send({text: body})
-      .expect(200)
-      .expect(/gvid/)
-      .expect(/[A-Z0-9]{5}/)
-      .end done
-    , 8000
-  )
   it 'GET /template/*', (done) ->
     request(app).get("/template/publish")
       .expect(200)
       .end done
+
+  unless process.env.SKIP_GOOGLE_STORAGE_TEST
+    it('POST /publish', (done) ->
+      body = "digraph G {\n d1 -> d2 -> d3; d1 -> d4; }"
+      request(app).post("/publish").send({text: body})
+        .expect(200)
+        .expect(/gvid/)
+        .expect(/[A-Z0-9]{5}/)
+        .end done
+      , 8000
+    )
