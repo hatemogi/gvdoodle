@@ -20,7 +20,7 @@
         return this.gvChanged || this.ranEngine !== this.engine;
       };
       self.showPublishButton = function() {
-        return this.changed() && this.runSuccess && !this.isLoading;
+        return (this.changed() || self.id === 'NEWT1') && this.runSuccess && !this.isLoading;
       };
       window.editor = editor = ace.edit("editor");
       editor.setTheme("ace/theme/tomorrow");

@@ -13,7 +13,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
     self.changed = ->
       this.gvChanged || this.ranEngine != this.engine
     self.showPublishButton = ->
-      this.changed() && this.runSuccess && !this.isLoading
+      (this.changed() || self.id == 'NEWT1') && this.runSuccess && !this.isLoading
     window.editor = editor = ace.edit("editor")
     editor.setTheme("ace/theme/tomorrow")
     editor.getSession().setMode("ace/mode/dot")
