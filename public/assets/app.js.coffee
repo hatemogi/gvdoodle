@@ -42,6 +42,7 @@ app.controller "EditorCtrl", ['$scope', '$http', '$sce', '$modal',
     this.run = (e) ->
       self.isLoading = true
       self.ranEngine = self.engine
+      self.flash = null
       $http.post("/preview", {
         text: editor.getValue()
         engine: self.engine
